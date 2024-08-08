@@ -14,6 +14,10 @@ config/name="Slingy Team"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://assets/game_icon/slingy_team_icon_64.png"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [rendering]
 
 renderer/rendering_method="mobile"
