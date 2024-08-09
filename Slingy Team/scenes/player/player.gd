@@ -44,11 +44,11 @@ func set_player_freeze_off() -> void:
 func update_enum_state_each_frame(delta: float) -> void:
 	match _state_enum:
 		PLAYER_STATE.DRAG:
-			update_drag()
+			update_drag_to_release()
 
 
-func update_drag() -> void:
-	if detect_release() == true:
+func update_drag_to_release() -> void:
+	if is_detect_input_released() == true:
 		# 'Return' is used here to check if the player is released
 		# If it's true, it exits the function and the rest of the code won't be executed
 		return
@@ -58,7 +58,7 @@ func update_drag() -> void:
 	position = global_mouse_position
 
 
-func detect_release() -> bool:
+func is_detect_input_released() -> bool:
 	if _state_enum == PLAYER_STATE.DRAG:
 		is_player_released_drag_to_fly()
 	return false
