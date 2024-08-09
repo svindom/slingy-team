@@ -1,0 +1,90 @@
+[gd_scene load_steps=14 format=3 uid="uid://k73kurv3xgum"]
+
+[ext_resource type="Texture2D" uid="uid://beivm0lau2ccy" path="res://assets/images/heroes/blacky_ball.png" id="1_abj86"]
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_k53xp"]
+[ext_resource type="Texture2D" uid="uid://cc7bhywptqpgk" path="res://assets/sprite_animations/water_spalsh_sprite_sheet.png" id="2_bjcds"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3vn7n"]
+radius = 25.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_llmm7"]
+atlas = ExtResource("2_bjcds")
+region = Rect2(0, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_237xu"]
+atlas = ExtResource("2_bjcds")
+region = Rect2(512, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7p3u"]
+atlas = ExtResource("2_bjcds")
+region = Rect2(1024, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydsy6"]
+atlas = ExtResource("2_bjcds")
+region = Rect2(1536, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2mgg6"]
+atlas = ExtResource("2_bjcds")
+region = Rect2(2048, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pjncg"]
+atlas = ExtResource("2_bjcds")
+region = Rect2(2560, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l5gqf"]
+atlas = ExtResource("2_bjcds")
+region = Rect2(3072, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ypfif"]
+atlas = ExtResource("2_bjcds")
+region = Rect2(3584, 0, 512, 512)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mo4s2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_llmm7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_237xu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p7p3u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydsy6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2mgg6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pjncg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l5gqf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ypfif")
+}],
+"loop": false,
+"name": &"water_splash_animation",
+"speed": 10.0
+}]
+
+[node name="Player" type="RigidBody2D"]
+script = ExtResource("1_k53xp")
+
+[node name="BallSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_abj86")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_3vn7n")
+
+[node name="WaterSplashAnimation" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -189.665)
+scale = Vector2(0.35, 0.35)
+sprite_frames = SubResource("SpriteFrames_mo4s2")
+animation = &"water_splash_animation"
+frame = 2
+frame_progress = 0.683925

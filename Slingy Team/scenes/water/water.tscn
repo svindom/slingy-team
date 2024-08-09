@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bcv5ce1jt77i0"]
 
-[ext_resource type="Script" path="res://test_scenes/water/water.gd" id="1_5ndj5"]
+[ext_resource type="Script" path="res://scenes/water/water.gd" id="1_5ndj5"]
 [ext_resource type="Texture2D" uid="uid://d4lrbcaxrk07y" path="res://assets/images/background/waterTop_high.png" id="1_ukdxf"]
 [ext_resource type="Texture2D" uid="uid://biirjo6rkgx18" path="res://assets/images/background/slingy_team_water_bg.png" id="2_jos85"]
 [ext_resource type="AudioStream" uid="uid://bs46glhj71i2" path="res://assets/audio/splash.ogg" id="3_83745"]

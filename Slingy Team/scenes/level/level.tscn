@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://c5e4wny3u5whu"]
+[gd_scene load_steps=4 format=3 uid="uid://c5e4wny3u5whu"]
 
 [ext_resource type="Texture2D" uid="uid://dat5yeet5d01s" path="res://assets/images/background/slingy_team_main_bg.png" id="1_6ihsi"]
-[ext_resource type="PackedScene" uid="uid://bcv5ce1jt77i0" path="res://test_scenes/water/water.tscn" id="2_we4y8"]
+[ext_resource type="Script" path="res://scenes/level/level.gd" id="1_jsexq"]
+[ext_resource type="PackedScene" uid="uid://bcv5ce1jt77i0" path="res://scenes/water/water.tscn" id="2_we4y8"]
 
 [node name="Level" type="Node2D"]
+script = ExtResource("1_jsexq")
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(-13, -275)
