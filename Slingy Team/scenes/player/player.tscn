@@ -96,7 +96,6 @@ frame_progress = 0.683925
 wait_time = 2.0
 
 [node name="Label" type="Label" parent="."]
-visible = false
 offset_left = -28.0
 offset_top = -52.0
 offset_right = 27.0

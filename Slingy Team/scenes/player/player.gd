@@ -49,6 +49,8 @@ func update_enum_state_each_frame(delta: float) -> void:
 
 func update_drag() -> void:
 	if detect_release() == true:
+		# 'Return' is used here to check if the player is released
+		# If it's true, it exits the function and the rest of the code won't be executed
 		return
 	
 	var global_mouse_position: Vector2 = get_global_mouse_position()
