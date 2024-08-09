@@ -1,5 +1,6 @@
 extends Node2D
 
+
 const PLAYER_SCENE: PackedScene = preload("res://scenes/player/player.tscn")
 @onready var player_position_marker: Marker2D = $PlayerPosition
 
@@ -30,6 +31,11 @@ func spawn_new_player() -> void:
 
 func on_player_destroyed() -> void:
 	spawn_new_player()
-	
-	
-	
+
+
+
+
+
+
+
+

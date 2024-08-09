@@ -1,9 +1,18 @@
 extends RigidBody2D
 
 
+enum PLAYER_STATE {
+	READY,
+	DRAG,
+	RELEASE
+}
+var _state_enum: PLAYER_STATE = PLAYER_STATE.READY
+
 @onready var water_splash_animation: AnimatedSprite2D = $WaterSplashAnimation
 @onready var ball_sprite: Sprite2D = $BallSprite
 @onready var player_delete_timer: Timer = $PlayerDeleteTimer
+
+@onready var label: Label = $Label
 
 
 
@@ -14,8 +23,50 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func _physics_process(delta: float):
+	update_enum_state_each_frame(delta)
+	update_label()
+
+
+func set_new_state_enum(new_state_enum: PLAYER_STATE) -> void:
+	_state_enum = new_state_enum
+	set_player_freeze_off()
+
+
+func set_player_freeze_off() -> void:
+	if _state_enum == PLAYER_STATE.RELEASE:
+		freeze = false
+	elif _state_enum == PLAYER_STATE.DRAG:
+		pass
+		# I need to change a name of this function when I add a new logic here!!!
+
+
+func update_enum_state_each_frame(delta: float) -> void:
+	match _state_enum:
+		PLAYER_STATE.DRAG:
+			update_drag()
+
+
+func update_drag() -> void:
+	if detect_release() == true:
+		return
+	
+	var global_mouse_position: Vector2 = get_global_mouse_position()
+	# 'position' here is a position of the player
+	position = global_mouse_position
+
+
+func detect_release() -> bool:
+	if _state_enum == PLAYER_STATE.DRAG:
+		is_player_released_drag_to_fly()
+	return false
+
+
+func is_player_released_drag_to_fly() -> bool:
+	if Input.is_action_just_released("drag") == true:
+		set_new_state_enum(PLAYER_STATE.RELEASE)
+		return true
+	return false
 
 
 func play_water_spalash_animation() -> void:
@@ -34,4 +85,9 @@ func _on_player_delete_timer_timeout() -> void:
 
 
 func _on_input_event(viewport, event, shape_idx):
-	pass # Replace with function body.
+	if _state_enum == PLAYER_STATE.READY and event.is_action_pressed("drag"):
+		set_new_state_enum(PLAYER_STATE.DRAG)
+
+
+func update_label() -> void:
+	label.text = "%s" % PLAYER_STATE.keys()[_state_enum]

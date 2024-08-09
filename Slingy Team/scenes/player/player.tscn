@@ -84,6 +84,7 @@ texture = ExtResource("1_abj86")
 shape = SubResource("CircleShape2D_3vn7n")
 
 [node name="WaterSplashAnimation" type="AnimatedSprite2D" parent="."]
+visible = false
 position = Vector2(0, -132)
 scale = Vector2(0.35, 0.35)
 sprite_frames = SubResource("SpriteFrames_mo4s2")
@@ -93,6 +94,15 @@ frame_progress = 0.683925
 
 [node name="PlayerDeleteTimer" type="Timer" parent="."]
 wait_time = 2.0
+
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_left = -28.0
+offset_top = -52.0
+offset_right = 27.0
+offset_bottom = -29.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "DEBUG"
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="timeout" from="PlayerDeleteTimer" to="." method="_on_player_delete_timer_timeout"]

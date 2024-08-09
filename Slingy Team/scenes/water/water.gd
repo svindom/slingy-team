@@ -1,6 +1,8 @@
 extends Area2D
 
+
 @onready var water_splash_sound: AudioStreamPlayer2D = $WaterSplashSound
+
 
 
 # Called when the node enters the scene tree for the first time.
