@@ -14,5 +14,5 @@ func _process(delta):
 
 
 func _on_body_entered(body):
-	water_splash_sound.play()
 	SignalManager.on_player_destroyed.emit()
+	water_splash_sound.play()
