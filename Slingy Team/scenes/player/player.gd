@@ -60,11 +60,11 @@ func update_drag_to_release() -> void:
 
 func is_detect_input_released() -> bool:
 	if _state_enum == PLAYER_STATE.DRAG:
-		is_player_released_drag_to_fly()
+		is_player_released_button()
 	return false
 
 
-func is_player_released_drag_to_fly() -> bool:
+func is_player_released_button() -> bool:
 	if Input.is_action_just_released("drag") == true:
 		set_new_state_enum(PLAYER_STATE.RELEASE)
 		return true
