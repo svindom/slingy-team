@@ -96,12 +96,14 @@ frame_progress = 0.683925
 wait_time = 2.0
 
 [node name="Label" type="Label" parent="."]
-offset_left = -28.0
-offset_top = -52.0
-offset_right = 27.0
-offset_bottom = -29.0
+offset_left = -27.0
+offset_top = -74.0
+offset_right = 28.0
+offset_bottom = -51.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "DEBUG"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="timeout" from="PlayerDeleteTimer" to="." method="_on_player_delete_timer_timeout"]

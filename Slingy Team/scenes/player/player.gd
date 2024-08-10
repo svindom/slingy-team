@@ -1,13 +1,6 @@
 extends RigidBody2D
 
 
-enum PLAYER_STATE {
-	READY,
-	DRAG,
-	RELEASE
-}
-var _state_enum: PLAYER_STATE = PLAYER_STATE.READY
-
 @onready var water_splash_animation: AnimatedSprite2D = $WaterSplashAnimation
 @onready var ball_sprite: Sprite2D = $BallSprite
 @onready var player_delete_timer: Timer = $PlayerDeleteTimer
@@ -15,11 +8,27 @@ var _state_enum: PLAYER_STATE = PLAYER_STATE.READY
 @onready var label: Label = $Label
 
 
+const  DRAG_LIMITED_MAX_VALUE_POSITION = Vector2(0, 60)
+const DRAG_LIMITED_MIN_VALUE_POSITION = Vector2(-60, 0)
+
+enum PLAYER_STATE {
+	READY,
+	DRAG,
+	RELEASE
+}
+var _state_enum: PLAYER_STATE = PLAYER_STATE.READY
+
+var _start_player_position: Vector2 = Vector2.ZERO # position of a ball
+var _drag_start_position: Vector2 = Vector2.ZERO # finger or a mouse position when it starts dragging
+var _dragged_vector: Vector2 = Vector2.ZERO # is the amount we've actually dragged versus the drag start. So we know how much impulse to apply.
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	SignalManager.on_player_destroyed.connect(delete_player)
 	water_splash_animation.hide()
+	_start_player_position = position
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -30,15 +39,11 @@ func _physics_process(delta: float):
 
 func set_new_state_enum(new_state_enum: PLAYER_STATE) -> void:
 	_state_enum = new_state_enum
-	set_player_freeze_off()
-
-
-func set_player_freeze_off() -> void:
+	
 	if _state_enum == PLAYER_STATE.RELEASE:
 		freeze = false
 	elif _state_enum == PLAYER_STATE.DRAG:
-		pass
-		# I need to change a name of this function when I add a new logic here!!!
+		_drag_start_position = get_global_mouse_position()
 
 
 func update_enum_state_each_frame(delta: float) -> void:
@@ -54,8 +59,20 @@ func update_drag_to_release() -> void:
 		return
 	
 	var global_mouse_position: Vector2 = get_global_mouse_position()
-	# 'position' here is a position of the player
-	position = global_mouse_position
+	
+	_dragged_vector = get_dragged_vector(global_mouse_position)
+	dragg_in_limits()
+
+
+func get_dragged_vector(global_mouse_position: Vector2) -> Vector2:
+	var dragged_vector: Vector2 = global_mouse_position - _drag_start_position
+	return dragged_vector
+
+
+func dragg_in_limits() -> void:
+	_dragged_vector.x = clampf(_dragged_vector.x, DRAG_LIMITED_MIN_VALUE_POSITION.x, DRAG_LIMITED_MAX_VALUE_POSITION.x)
+	_dragged_vector.y = clampf(_dragged_vector.y, DRAG_LIMITED_MIN_VALUE_POSITION.y, DRAG_LIMITED_MAX_VALUE_POSITION.y)
+	position = _start_player_position + _dragged_vector
 
 
 func is_detect_input_released() -> bool:
@@ -92,4 +109,7 @@ func _on_input_event(viewport, event, shape_idx):
 
 
 func update_label() -> void:
-	label.text = "%s" % PLAYER_STATE.keys()[_state_enum]
+	# keys method returns an array of all the names in the enum
+	label.text = "%s\n" % PLAYER_STATE.keys()[_state_enum]
+	
+	label.text += "%.1f, %.1f" % [_dragged_vector.x, _dragged_vector.y]

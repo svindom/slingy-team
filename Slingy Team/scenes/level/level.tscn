@@ -17,4 +17,4 @@ centered = false
 position = Vector2(0, 531)
 
 [node name="PlayerPosition" type="Marker2D" parent="."]
-position = Vector2(140, 293)
+position = Vector2(271, 259)
