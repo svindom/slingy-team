@@ -72,7 +72,13 @@ func get_dragged_vector(global_mouse_position: Vector2) -> Vector2:
 func dragg_in_limits() -> void:
 	_dragged_vector.x = clampf(_dragged_vector.x, DRAG_LIMITED_MIN_VALUE_POSITION.x, DRAG_LIMITED_MAX_VALUE_POSITION.x)
 	_dragged_vector.y = clampf(_dragged_vector.y, DRAG_LIMITED_MIN_VALUE_POSITION.y, DRAG_LIMITED_MAX_VALUE_POSITION.y)
-	position = _start_player_position + _dragged_vector
+	change_player_position(_start_player_position, _dragged_vector)
+
+
+func change_player_position(start_position: Vector2, moved_position: Vector2) -> Vector2:
+	var new_position: Vector2 = start_position + moved_position
+	position = new_position # This updates the position of the player
+	return new_position
 
 
 func is_detect_input_released() -> bool:
