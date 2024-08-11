@@ -28,10 +28,11 @@ var _dragged_vector: Vector2 = Vector2.ZERO # is the amount we've actually dragg
 func _ready():
 	SignalManager.on_player_destroyed.connect(delete_player)
 	water_splash_animation.hide()
+	
 	_start_player_position = position
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+# Called every frame. 'delta' is the elapsed time since the previous frame.S
 func _physics_process(delta: float):
 	update_enum_state_each_frame(delta)
 	update_label()
@@ -109,7 +110,7 @@ func _on_player_delete_timer_timeout() -> void:
 	queue_free()
 
 
-func _on_input_event(viewport, event, shape_idx):
+func _on_input_event(_viewport, event, _shape_idx):
 	if _state_enum == PLAYER_STATE.READY and event.is_action_pressed("drag"):
 		set_new_state_enum(PLAYER_STATE.DRAG)
 
