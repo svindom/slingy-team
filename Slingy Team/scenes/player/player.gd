@@ -4,9 +4,10 @@ extends RigidBody2D
 @onready var water_splash_animation: AnimatedSprite2D = $WaterSplashAnimation
 @onready var ball_sprite: Sprite2D = $BallSprite
 @onready var player_delete_timer: Timer = $PlayerDeleteTimer
+@onready var stretch_sound: AudioStreamPlayer2D = $StretchSound
+@onready var arrow: Sprite2D = $Arrow
 
 @onready var label: Label = $Label
-
 
 const  DRAG_LIMITED_MAX_VALUE_POSITION = Vector2(0, 60)
 const DRAG_LIMITED_MIN_VALUE_POSITION = Vector2(-60, 0)
@@ -21,6 +22,7 @@ var _state_enum: PLAYER_STATE = PLAYER_STATE.READY
 var _start_player_position: Vector2 = Vector2.ZERO # position of a ball
 var _drag_start_position: Vector2 = Vector2.ZERO # finger or a mouse position when it starts dragging
 var _dragged_vector: Vector2 = Vector2.ZERO # is the amount we've actually dragged versus the drag start. So we know how much impulse to apply.
+var _previous_dragged_vector: Vector2 = Vector2.ZERO # Previous vector that we dragged from. To have data between the previos and last drags.
 
 
 
@@ -28,6 +30,7 @@ var _dragged_vector: Vector2 = Vector2.ZERO # is the amount we've actually dragg
 func _ready():
 	SignalManager.on_player_destroyed.connect(delete_player)
 	water_splash_animation.hide()
+	arrow.hide()
 	
 	_start_player_position = position
 
@@ -42,9 +45,11 @@ func set_new_state_enum(new_state_enum: PLAYER_STATE) -> void:
 	_state_enum = new_state_enum
 	
 	if _state_enum == PLAYER_STATE.RELEASE:
+		arrow.hide()
 		freeze = false
 	elif _state_enum == PLAYER_STATE.DRAG:
 		_drag_start_position = get_global_mouse_position()
+		arrow.show()
 
 
 func update_enum_state_each_frame(delta: float) -> void:
@@ -62,7 +67,9 @@ func update_drag_to_release() -> void:
 	var global_mouse_position: Vector2 = get_global_mouse_position()
 	
 	_dragged_vector = get_dragged_vector(global_mouse_position)
+	play_stretch_sound()
 	dragg_in_limits()
+	rotate_scale_arrow()
 
 
 func get_dragged_vector(global_mouse_position: Vector2) -> Vector2:
@@ -71,8 +78,12 @@ func get_dragged_vector(global_mouse_position: Vector2) -> Vector2:
 
 
 func dragg_in_limits() -> void:
+	# here we update each time the _previous_dragged_vector to the updated version, which is _dragged_vector
+	_previous_dragged_vector = _dragged_vector
+	
 	_dragged_vector.x = clampf(_dragged_vector.x, DRAG_LIMITED_MIN_VALUE_POSITION.x, DRAG_LIMITED_MAX_VALUE_POSITION.x)
 	_dragged_vector.y = clampf(_dragged_vector.y, DRAG_LIMITED_MIN_VALUE_POSITION.y, DRAG_LIMITED_MAX_VALUE_POSITION.y)
+	
 	change_player_position(_start_player_position, _dragged_vector)
 
 
@@ -93,6 +104,18 @@ func is_player_released_button() -> bool:
 		set_new_state_enum(PLAYER_STATE.RELEASE)
 		return true
 	return false
+
+
+func rotate_scale_arrow() -> void:
+	var vector_direction_between_start_and_last_positions: Vector2 = _start_player_position - position
+	arrow.rotation = vector_direction_between_start_and_last_positions.angle()
+
+
+func play_stretch_sound() -> void:
+	var difference_between_last_and_previous_vectors = _dragged_vector - _previous_dragged_vector
+	if difference_between_last_and_previous_vectors.length() > 0:
+		if stretch_sound.playing == false: # to avoid overlapping sounds
+			stretch_sound.play()
 
 
 func play_water_spalash_animation() -> void:

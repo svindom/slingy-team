@@ -1,8 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://k73kurv3xgum"]
+[gd_scene load_steps=16 format=3 uid="uid://k73kurv3xgum"]
 
 [ext_resource type="Texture2D" uid="uid://beivm0lau2ccy" path="res://assets/images/heroes/blacky_ball.png" id="1_abj86"]
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_k53xp"]
 [ext_resource type="Texture2D" uid="uid://cc7bhywptqpgk" path="res://assets/sprite_animations/water_spalsh_sprite_sheet.png" id="2_bjcds"]
+[ext_resource type="Texture2D" uid="uid://ckh32rmsp0rx4" path="res://assets/images/props/arrow.png" id="4_rmqyb"]
+[ext_resource type="AudioStream" uid="uid://bqij2il8x840c" path="res://assets/audio/stretch2.ogg" id="5_tftpj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3vn7n"]
 radius = 25.0
@@ -104,6 +106,15 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "DEBUG"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Arrow" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_rmqyb")
+offset = Vector2(180, 0)
+
+[node name="StretchSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_tftpj")
+volume_db = -14.0
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="timeout" from="PlayerDeleteTimer" to="." method="_on_player_delete_timer_timeout"]
