@@ -123,10 +123,6 @@ func _on_input_event(_viewport, event, _shape_idx):
 		set_new_state_enum(PLAYER_STATE.DRAG)
 
 
-func _on_player_delete_timer_timeout() -> void:
-	queue_free()
-
-
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	delete_player()
 
@@ -135,6 +131,10 @@ func delete_player() -> void:
 	SignalManager.on_player_destroyed.emit()
 	ball_sprite.hide()
 	player_delete_timer.start()
+
+
+func _on_player_delete_timer_timeout() -> void:
+	queue_free()
 
 
 func update_label() -> void:
