@@ -5,7 +5,6 @@ extends RigidBody2D
 @onready var player_delete_timer: Timer = $PlayerDeleteTimer
 @onready var stretch_sound: AudioStreamPlayer2D = $StretchSound
 @onready var arrow: Sprite2D = $Arrow
-@onready var water_splash_animation: AnimatedSprite2D = $WaterSplashAnimation
 
 @onready var label: Label = $Label
 
@@ -29,7 +28,6 @@ var _previous_dragged_vector: Vector2 = Vector2.ZERO # Previous vector that we d
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	arrow.hide()
-	water_splash_animation.hide()
 	_start_player_position = position
 
 
@@ -117,10 +115,6 @@ func play_stretch_sound() -> void:
 
 
 func on_water_collision() -> void:
-	# Play the water splash animation
-	water_splash_animation.show()
-	water_splash_animation.play("water_splash_animation")
-	
 	ball_sprite.hide()
 
 

@@ -60,6 +60,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ypfif")
+}, {
+"duration": 1.0,
+"texture": null
 }],
 "loop": false,
 "name": &"water_splash_animation",
@@ -70,5 +73,5 @@ animations = [{
 scale = Vector2(0.35, 0.35)
 sprite_frames = SubResource("SpriteFrames_akg6v")
 animation = &"water_splash_animation"
-frame = 7
+frame = 8
 frame_progress = 1.0

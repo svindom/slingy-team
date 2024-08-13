@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://k73kurv3xgum"]
+[gd_scene load_steps=6 format=3 uid="uid://k73kurv3xgum"]
 
 [ext_resource type="Texture2D" uid="uid://beivm0lau2ccy" path="res://assets/images/heroes/blacky_ball.png" id="1_abj86"]
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_k53xp"]
 [ext_resource type="Texture2D" uid="uid://ckh32rmsp0rx4" path="res://assets/images/props/arrow.png" id="4_rmqyb"]
-[ext_resource type="PackedScene" uid="uid://dcsy0sjilyg8n" path="res://scenes/water_splash_animation/water_splash_animation.tscn" id="5_a1llp"]
 [ext_resource type="AudioStream" uid="uid://bqij2il8x840c" path="res://assets/audio/stretch2.ogg" id="5_tftpj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3vn7n"]
@@ -46,9 +45,6 @@ volume_db = -14.0
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(2.41399e-06, -0.5)
 scale = Vector2(1.8, 1.75)
-
-[node name="WaterSplashAnimation" parent="." instance=ExtResource("5_a1llp")]
-position = Vector2(0, -159)
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="timeout" from="PlayerDeleteTimer" to="." method="_on_player_delete_timer_timeout"]
