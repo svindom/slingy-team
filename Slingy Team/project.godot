@@ -17,6 +17,7 @@ config/icon="res://assets/game_icon/slingy_team_icon_64.png"
 [autoload]
 
 SignalManager="*res://singletons/signal_manager.gd"
+GameManager="*res://singletons/game_manager.gd"
 
 [display]
 

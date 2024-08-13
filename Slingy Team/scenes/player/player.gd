@@ -1,11 +1,11 @@
 extends RigidBody2D
 
 
-@onready var water_splash_animation: AnimatedSprite2D = $WaterSplashAnimation
 @onready var ball_sprite: Sprite2D = $BallSprite
 @onready var player_delete_timer: Timer = $PlayerDeleteTimer
 @onready var stretch_sound: AudioStreamPlayer2D = $StretchSound
 @onready var arrow: Sprite2D = $Arrow
+@onready var water_splash_animation: AnimatedSprite2D = $WaterSplashAnimation
 
 @onready var label: Label = $Label
 
@@ -28,10 +28,8 @@ var _previous_dragged_vector: Vector2 = Vector2.ZERO # Previous vector that we d
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	SignalManager.on_player_destroyed.connect(delete_player)
-	water_splash_animation.hide()
 	arrow.hide()
-	
+	water_splash_animation.hide()
 	_start_player_position = position
 
 
@@ -118,19 +116,12 @@ func play_stretch_sound() -> void:
 			stretch_sound.play()
 
 
-func play_water_spalash_animation() -> void:
+func on_water_collision() -> void:
+	# Play the water splash animation
 	water_splash_animation.show()
 	water_splash_animation.play("water_splash_animation")
-
-
-func delete_player() -> void:
+	
 	ball_sprite.hide()
-	play_water_spalash_animation()
-	player_delete_timer.start()
-
-
-func _on_player_delete_timer_timeout() -> void:
-	queue_free()
 
 
 func _on_input_event(_viewport, event, _shape_idx):
@@ -138,8 +129,23 @@ func _on_input_event(_viewport, event, _shape_idx):
 		set_new_state_enum(PLAYER_STATE.DRAG)
 
 
+func _on_player_delete_timer_timeout() -> void:
+	queue_free()
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited():
+	delete_player()
+
+
+func delete_player() -> void:
+	SignalManager.on_player_destroyed.emit()
+	ball_sprite.hide()
+	player_delete_timer.start()
+
+
 func update_label() -> void:
 	# keys method returns an array of all the names in the enum
 	label.text = "%s\n" % PLAYER_STATE.keys()[_state_enum]
 	
 	label.text += "%.1f, %.1f" % [_dragged_vector.x, _dragged_vector.y]
+

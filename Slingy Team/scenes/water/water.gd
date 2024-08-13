@@ -16,5 +16,7 @@ func _process(delta):
 
 
 func _on_body_entered(body):
-	SignalManager.on_player_destroyed.emit()
-	water_splash_sound.play()
+	if body.is_in_group(GameManager.PLAYER_GROUP_NAME) == true:
+		water_splash_sound.play()
+		body.on_water_collision()
+	

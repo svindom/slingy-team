@@ -1,0 +1,74 @@
+[gd_scene load_steps=11 format=3 uid="uid://dcsy0sjilyg8n"]
+
+[ext_resource type="Texture2D" uid="uid://cc7bhywptqpgk" path="res://assets/sprite_animations/water_spalsh_sprite_sheet.png" id="1_h2ivc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_llmm7"]
+atlas = ExtResource("1_h2ivc")
+region = Rect2(0, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_237xu"]
+atlas = ExtResource("1_h2ivc")
+region = Rect2(512, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7p3u"]
+atlas = ExtResource("1_h2ivc")
+region = Rect2(1024, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydsy6"]
+atlas = ExtResource("1_h2ivc")
+region = Rect2(1536, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2mgg6"]
+atlas = ExtResource("1_h2ivc")
+region = Rect2(2048, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pjncg"]
+atlas = ExtResource("1_h2ivc")
+region = Rect2(2560, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l5gqf"]
+atlas = ExtResource("1_h2ivc")
+region = Rect2(3072, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ypfif"]
+atlas = ExtResource("1_h2ivc")
+region = Rect2(3584, 0, 512, 512)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_akg6v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_llmm7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_237xu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p7p3u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydsy6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2mgg6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pjncg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l5gqf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ypfif")
+}],
+"loop": false,
+"name": &"water_splash_animation",
+"speed": 10.0
+}]
+
+[node name="WaterSplashAnimation" type="AnimatedSprite2D"]
+scale = Vector2(0.35, 0.35)
+sprite_frames = SubResource("SpriteFrames_akg6v")
+animation = &"water_splash_animation"
+frame = 7
+frame_progress = 1.0
