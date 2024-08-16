@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://k73kurv3xgum"]
+[gd_scene load_steps=7 format=3 uid="uid://k73kurv3xgum"]
 
 [ext_resource type="Texture2D" uid="uid://beivm0lau2ccy" path="res://assets/images/heroes/blacky_ball.png" id="1_abj86"]
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_k53xp"]
 [ext_resource type="Texture2D" uid="uid://ckh32rmsp0rx4" path="res://assets/images/props/arrow.png" id="4_rmqyb"]
+[ext_resource type="AudioStream" uid="uid://cg1eib8alvwlw" path="res://assets/audio/whoosh-6316.mp3" id="5_iikwd"]
 [ext_resource type="AudioStream" uid="uid://bqij2il8x840c" path="res://assets/audio/stretch2.ogg" id="5_tftpj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3vn7n"]
@@ -40,6 +41,11 @@ offset = Vector2(180, 0)
 [node name="StretchSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_tftpj")
 volume_db = -14.0
+
+[node name="LaunchSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_iikwd")
+volume_db = -20.0
+pitch_scale = 3.0
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(2.41399e-06, -0.5)

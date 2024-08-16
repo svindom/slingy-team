@@ -5,9 +5,10 @@ extends RigidBody2D
 @export var _impulse_max: float = 1000.0 
 
 @onready var ball_sprite: Sprite2D = $BallSprite
+@onready var arrow: Sprite2D = $Arrow
 @onready var player_delete_timer: Timer = $PlayerDeleteTimer
 @onready var stretch_sound: AudioStreamPlayer2D = $StretchSound
-@onready var arrow: Sprite2D = $Arrow
+@onready var launch_sound: AudioStreamPlayer2D = $LaunchSound
 
 @onready var label: Label = $Label
 
@@ -55,8 +56,10 @@ func set_new_state_enum(new_state_enum: PLAYER_STATE) -> void:
 	
 	if _state_enum == PLAYER_STATE.RELEASE:
 		arrow.hide()
+		label.hide()
 		freeze = false
 		apply_central_impulse(get_impulse_to_player())
+		launch_sound.play()
 	elif _state_enum == PLAYER_STATE.DRAG:
 		_drag_start_position = get_global_mouse_position()
 		arrow.show()
