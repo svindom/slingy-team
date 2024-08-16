@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://dpgjpmms1blqj"]
+
+[ext_resource type="Texture2D" uid="uid://10g154rythu1" path="res://assets/images/props/basket_front.png" id="1_ts1ea"]
+
+[node name="Cup" type="StaticBody2D"]
+
+[node name="CupSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("1_ts1ea")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-72, 4, -72, -26, -41, -31, -40, -1, 38, -1, 40, -31, 70, -26, 69, 5, 58, 6, 54, 30, -54, 30, -59, 6)

@@ -1,17 +1,24 @@
-[gd_scene load_steps=7 format=3 uid="uid://k73kurv3xgum"]
+[gd_scene load_steps=9 format=3 uid="uid://k73kurv3xgum"]
 
 [ext_resource type="Texture2D" uid="uid://beivm0lau2ccy" path="res://assets/images/heroes/blacky_ball.png" id="1_abj86"]
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_k53xp"]
 [ext_resource type="Texture2D" uid="uid://ckh32rmsp0rx4" path="res://assets/images/props/arrow.png" id="4_rmqyb"]
 [ext_resource type="AudioStream" uid="uid://cg1eib8alvwlw" path="res://assets/audio/whoosh-6316.mp3" id="5_iikwd"]
 [ext_resource type="AudioStream" uid="uid://bqij2il8x840c" path="res://assets/audio/stretch2.ogg" id="5_tftpj"]
+[ext_resource type="AudioStream" uid="uid://c7gf3ljf1nc63" path="res://assets/audio/kick_wood.ogg" id="6_66lha"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ss5f6"]
+bounce = 0.2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3vn7n"]
 radius = 25.0
 
 [node name="Player" type="RigidBody2D" groups=["player"]]
 input_pickable = true
+physics_material_override = SubResource("PhysicsMaterial_ss5f6")
 freeze = true
+contact_monitor = true
+max_contacts_reported = 1
 script = ExtResource("1_k53xp")
 
 [node name="BallSprite" type="Sprite2D" parent="."]
@@ -47,10 +54,15 @@ stream = ExtResource("5_iikwd")
 volume_db = -20.0
 pitch_scale = 3.0
 
+[node name="CupSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_66lha")
+volume_db = -14.0
+
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(2.41399e-06, -0.5)
 scale = Vector2(1.8, 1.75)
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="sleeping_state_changed" from="." to="." method="_on_sleeping_state_changed"]
 [connection signal="timeout" from="PlayerDeleteTimer" to="." method="_on_player_delete_timer_timeout"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

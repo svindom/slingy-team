@@ -7,7 +7,6 @@ const PLAYER_SCENE: PackedScene = preload("res://scenes/player/player.tscn")
 @onready var water_splash_animation: AnimatedSprite2D = $WaterSplashAnimation
 @onready var water: Area2D = $Water
 
-var _ball_position: Vector2 = Vector2.ZERO
 var _water_animation_position: Vector2 = Vector2.ZERO
 
 

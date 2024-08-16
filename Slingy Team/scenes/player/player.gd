@@ -9,6 +9,7 @@ extends RigidBody2D
 @onready var player_delete_timer: Timer = $PlayerDeleteTimer
 @onready var stretch_sound: AudioStreamPlayer2D = $StretchSound
 @onready var launch_sound: AudioStreamPlayer2D = $LaunchSound
+@onready var cup_sound: AudioStreamPlayer2D = $CupSound
 
 @onready var label: Label = $Label
 
@@ -28,6 +29,8 @@ var _dragged_vector: Vector2 = Vector2.ZERO # is the amount we've actually dragg
 var _previous_dragged_vector: Vector2 = Vector2.ZERO # Previous vector that we dragged from. To have data between the previos and last drags.
 
 var _arrow_scale_x_axis: float = 0.0
+
+var _last_collision_count: int = 0
 
 
 
@@ -69,6 +72,8 @@ func update_enum_state_each_frame(delta: float) -> void:
 	match _state_enum:
 		PLAYER_STATE.DRAG:
 			update_drag_to_release()
+		PLAYER_STATE.RELEASE:
+			update_in_flight()
 
 
 func update_drag_to_release() -> void:
@@ -136,6 +141,16 @@ func play_stretch_sound() -> void:
 			stretch_sound.play()
 
 
+func play_cup_collision_sound() -> void:
+	if _last_collision_count == 0 and get_contact_count() > 0 and cup_sound.playing == false:
+		cup_sound.play()
+	_last_collision_count = get_contact_count()
+
+
+func update_in_flight() -> void:
+	play_cup_collision_sound()
+
+
 func on_water_collision() -> void:
 	ball_sprite.hide()
 	label.hide()
@@ -166,3 +181,8 @@ func update_label() -> void:
 	label.text = "%s\n" % PLAYER_STATE.keys()[_state_enum]
 	
 	label.text += "%.1f, %.1f" % [_dragged_vector.x, _dragged_vector.y]
+
+
+func _on_sleeping_state_changed() -> void:
+	if sleeping == true:
+		delete_player()
