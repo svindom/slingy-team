@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Slingy Team"
-config/features=PackedStringArray("4.2", "Mobile")
+config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://assets/game_icon/slingy_team_icon_64.png"
 
 [autoload]

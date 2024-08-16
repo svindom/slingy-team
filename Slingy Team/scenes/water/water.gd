@@ -18,4 +18,3 @@ func _on_body_entered(body):
 	if body.is_in_group(GameManager.PLAYER_GROUP_NAME) == true:
 		water_splash_sound.play()
 		body.on_water_collision()
-	

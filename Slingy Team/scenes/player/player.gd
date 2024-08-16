@@ -1,6 +1,9 @@
 extends RigidBody2D
 
 
+@export var _impulse_mult: float = 20.0
+@export var _impulse_max: float = 1000.0 
+
 @onready var ball_sprite: Sprite2D = $BallSprite
 @onready var player_delete_timer: Timer = $PlayerDeleteTimer
 @onready var stretch_sound: AudioStreamPlayer2D = $StretchSound
@@ -23,10 +26,14 @@ var _drag_start_position: Vector2 = Vector2.ZERO # finger or a mouse position wh
 var _dragged_vector: Vector2 = Vector2.ZERO # is the amount we've actually dragged versus the drag start. So we know how much impulse to apply.
 var _previous_dragged_vector: Vector2 = Vector2.ZERO # Previous vector that we dragged from. To have data between the previos and last drags.
 
+var _arrow_scale_x_axis: float = 0.0
+
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	_arrow_scale_x_axis = arrow.scale.x
+	
 	arrow.hide()
 	_start_player_position = position
 
@@ -37,12 +44,19 @@ func _physics_process(delta: float):
 	update_label()
 
 
+func get_impulse_to_player() -> Vector2:
+	var reverse_direction_value: int = -1
+	var impulse: Vector2 = _dragged_vector * reverse_direction_value * _impulse_mult
+	return impulse
+
+
 func set_new_state_enum(new_state_enum: PLAYER_STATE) -> void:
 	_state_enum = new_state_enum
 	
 	if _state_enum == PLAYER_STATE.RELEASE:
 		arrow.hide()
 		freeze = false
+		apply_central_impulse(get_impulse_to_player())
 	elif _state_enum == PLAYER_STATE.DRAG:
 		_drag_start_position = get_global_mouse_position()
 		arrow.show()
@@ -103,6 +117,11 @@ func is_player_released_button() -> bool:
 
 
 func rotate_scale_arrow() -> void:
+	var impulse_length = get_impulse_to_player().length()
+	var percentage = impulse_length / _impulse_max
+	
+	arrow.scale.x = (_arrow_scale_x_axis * percentage) + _arrow_scale_x_axis
+	
 	var vector_direction_between_start_and_last_positions: Vector2 = _start_player_position - position
 	arrow.rotation = vector_direction_between_start_and_last_positions.angle()
 
@@ -116,6 +135,7 @@ func play_stretch_sound() -> void:
 
 func on_water_collision() -> void:
 	ball_sprite.hide()
+	label.hide()
 
 
 func _on_input_event(_viewport, event, _shape_idx):
@@ -128,12 +148,13 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 
 
 func delete_player() -> void:
-	SignalManager.on_player_destroyed.emit()
+	#SignalManager.on_player_destroyed.emit()
 	ball_sprite.hide()
 	player_delete_timer.start()
 
 
 func _on_player_delete_timer_timeout() -> void:
+	SignalManager.on_player_destroyed.emit()
 	queue_free()
 
 
@@ -142,4 +163,3 @@ func update_label() -> void:
 	label.text = "%s\n" % PLAYER_STATE.keys()[_state_enum]
 	
 	label.text += "%.1f, %.1f" % [_dragged_vector.x, _dragged_vector.y]
-
