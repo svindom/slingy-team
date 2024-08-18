@@ -1,8 +1,62 @@
-[gd_scene load_steps=2 format=3 uid="uid://dpgjpmms1blqj"]
+[gd_scene load_steps=7 format=3 uid="uid://dpgjpmms1blqj"]
 
+[ext_resource type="Script" path="res://scenes/cup/cup.gd" id="1_eyivy"]
 [ext_resource type="Texture2D" uid="uid://10g154rythu1" path="res://assets/images/props/basket_front.png" id="1_ts1ea"]
+[ext_resource type="AudioStream" uid="uid://drgp6cicb7728" path="res://assets/audio/vanish.wav" id="2_0011r"]
+
+[sub_resource type="Animation" id="Animation_24v0a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CupSprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.6, 0.6)]
+}
+
+[sub_resource type="Animation" id="Animation_7g8ha"]
+resource_name = "vanish_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CupSprite:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.433333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.6, 0.6), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VanishSound")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("2_0011r")
+}],
+"times": PackedFloat32Array(0.0333333)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2k7i5"]
+_data = {
+"RESET": SubResource("Animation_24v0a"),
+"vanish_animation": SubResource("Animation_7g8ha")
+}
 
 [node name="Cup" type="StaticBody2D"]
+script = ExtResource("1_eyivy")
 
 [node name="CupSprite" type="Sprite2D" parent="."]
 scale = Vector2(0.6, 0.6)
@@ -10,3 +64,13 @@ texture = ExtResource("1_ts1ea")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-72, 4, -72, -26, -41, -31, -40, -1, 38, -1, 40, -31, 70, -26, 69, 5, 58, 6, 54, 30, -54, 30, -59, 6)
+
+[node name="VanishSound" type="AudioStreamPlayer2D" parent="."]
+volume_db = -12.0
+
+[node name="VanishAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2k7i5")
+}
+
+[connection signal="animation_finished" from="VanishAnimation" to="." method="_on_vanish_animation_animation_finished"]

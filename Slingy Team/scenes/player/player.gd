@@ -63,6 +63,7 @@ func set_new_state_enum(new_state_enum: PLAYER_STATE) -> void:
 		freeze = false
 		apply_central_impulse(get_impulse_to_player())
 		launch_sound.play()
+		SignalManager.on_attemt_made.emit()
 	elif _state_enum == PLAYER_STATE.DRAG:
 		_drag_start_position = get_global_mouse_position()
 		arrow.show()
@@ -185,4 +186,7 @@ func update_label() -> void:
 
 func _on_sleeping_state_changed() -> void:
 	if sleeping == true:
+		var colliding_bodies: Array = get_colliding_bodies()
+		if colliding_bodies.size() > 0:
+			colliding_bodies[0].destroy_cup()
 		delete_player()
