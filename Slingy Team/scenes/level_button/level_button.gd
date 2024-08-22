@@ -12,9 +12,18 @@ const DEFAULT_SCALE: Vector2 = Vector2(1.0, 1.0)
 var _level_scene: PackedScene
 
 func _ready() -> void:
+	scale = DEFAULT_SCALE
 	level_text.text = str(level_number)
 	_level_scene = load("res://scenes/level/level%s.tscn" % level_number)
 
 
 func _on_pressed() -> void:
 	get_tree().change_scene_to_packed(_level_scene)
+
+
+func _on_mouse_entered() -> void:
+	scale = HOVER_SCALE # Replace with function body.
+
+
+func _on_mouse_exited() -> void:
+	scale = DEFAULT_SCALE # Replace with function body.
