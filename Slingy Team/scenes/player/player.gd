@@ -32,6 +32,7 @@ var _arrow_scale_x_axis: float = 0.0
 
 var _last_collision_count: int = 0
 
+var _is_ball_hide: bool = false
 
 
 # Called when the node enters the scene tree for the first time.
@@ -143,7 +144,7 @@ func play_stretch_sound() -> void:
 
 
 func play_cup_collision_sound() -> void:
-	if _last_collision_count == 0 and get_contact_count() > 0 and cup_sound.playing == false:
+	if _last_collision_count == 0 and get_contact_count() > 0 and cup_sound.playing == false and _is_ball_hide == false:
 		cup_sound.play()
 	_last_collision_count = get_contact_count()
 
@@ -154,6 +155,7 @@ func update_in_flight() -> void:
 
 func on_water_collision() -> void:
 	ball_sprite.hide()
+	_is_ball_hide = true
 	label.hide()
 
 
@@ -169,6 +171,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 func delete_player() -> void:
 	#SignalManager.on_player_destroyed.emit()
 	ball_sprite.hide()
+	_is_ball_hide = true
 	player_delete_timer.start()
 
 

@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c5e4wny3u5whu"]
+[gd_scene load_steps=5 format=3 uid="uid://c5e4wny3u5whu"]
 
 [ext_resource type="Texture2D" uid="uid://dat5yeet5d01s" path="res://assets/images/background/slingy_team_main_bg.png" id="1_6ihsi"]
 [ext_resource type="Script" path="res://scenes/level/level.gd" id="1_jsexq"]
 [ext_resource type="PackedScene" uid="uid://bcv5ce1jt77i0" path="res://scenes/water/water.tscn" id="2_we4y8"]
-[ext_resource type="PackedScene" uid="uid://dpgjpmms1blqj" path="res://scenes/cup/cup.tscn" id="4_obkai"]
 [ext_resource type="PackedScene" uid="uid://dcsy0sjilyg8n" path="res://scenes/water_splash_animation/water_splash_animation.tscn" id="4_qajdg"]
 
 [node name="Level" type="Node2D"]
@@ -22,14 +21,5 @@ position = Vector2(0, 531)
 position = Vector2(271, 259)
 
 [node name="WaterSplashAnimation" parent="." instance=ExtResource("4_qajdg")]
-
-[node name="Cup" parent="." instance=ExtResource("4_obkai")]
-position = Vector2(698, 425)
-
-[node name="Cup2" parent="." instance=ExtResource("4_obkai")]
-position = Vector2(922, 276)
-
-[node name="Cup3" parent="." instance=ExtResource("4_obkai")]
-position = Vector2(605, 181)
 
 [connection signal="body_entered" from="Water" to="." method="_on_water_body_entered"]

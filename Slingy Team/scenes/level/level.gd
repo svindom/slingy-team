@@ -2,6 +2,8 @@ extends Node2D
 
 
 const PLAYER_SCENE: PackedScene = preload("res://scenes/player/player.tscn")
+const MAIN_SCENE: PackedScene = preload("res://scenes/main/main.tscn")
+
 @onready var player_position_marker: Marker2D = $PlayerPosition
 
 @onready var water_splash_animation: AnimatedSprite2D = $WaterSplashAnimation
@@ -18,7 +20,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	pass
+	if Input.is_key_pressed(KEY_ESCAPE):
+		get_tree().change_scene_to_packed(MAIN_SCENE)
 
 
 func spawn_new_player() -> void:
