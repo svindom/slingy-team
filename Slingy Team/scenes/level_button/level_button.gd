@@ -12,12 +12,15 @@ const DEFAULT_SCALE: Vector2 = Vector2(1.0, 1.0)
 var _level_scene: PackedScene
 
 func _ready() -> void:
-	scale = DEFAULT_SCALE
 	level_text.text = str(level_number)
+	var best_score = ScoreManager.get_best_for_level(str(level_number))
+	score_text.text = str(best_score)
+	
 	_level_scene = load("res://scenes/level/level%s.tscn" % level_number)
 
 
 func _on_pressed() -> void:
+	ScoreManager.set_level_selected(level_number)
 	get_tree().change_scene_to_packed(_level_scene)
 
 

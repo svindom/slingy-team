@@ -55,7 +55,7 @@ _data = {
 "vanish_animation": SubResource("Animation_7g8ha")
 }
 
-[node name="Cup" type="StaticBody2D"]
+[node name="Cup" type="StaticBody2D" groups=["cup"]]
 script = ExtResource("1_eyivy")
 
 [node name="CupSprite" type="Sprite2D" parent="."]

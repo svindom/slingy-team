@@ -50,7 +50,7 @@ vertical_alignment = 1
 
 [node name="ScoreText" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "1000"
+text = "0"
 label_settings = SubResource("LabelSettings_g6h7o")
 horizontal_alignment = 1
 vertical_alignment = 1
