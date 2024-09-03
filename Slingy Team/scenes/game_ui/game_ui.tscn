@@ -1,0 +1,75 @@
+[gd_scene load_steps=6 format=3 uid="uid://cv6so1d3bmxwi"]
+
+[ext_resource type="LabelSettings" uid="uid://dbqd4u386xlm" path="res://font_effects/score_font_effect.tres" id="1_qev3p"]
+[ext_resource type="Script" path="res://scenes/game_ui/game_ui.gd" id="1_v8anu"]
+[ext_resource type="LabelSettings" uid="uid://be1h1hvbxyssn" path="res://font_effects/level_complete_font_effect.tres" id="2_rjo06"]
+[ext_resource type="LabelSettings" uid="uid://b2kif73l81x3j" path="res://font_effects/common_font_effect.tres" id="3_adboh"]
+[ext_resource type="AudioStream" uid="uid://ddbsayv465do7" path="res://assets/audio/jazzyfrenchy.mp3" id="4_lkhw8"]
+
+[node name="GameUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_v8anu")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="LevelText" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Level 10"
+label_settings = ExtResource("1_qev3p")
+
+[node name="AttemptsText" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Attempts 100"
+label_settings = ExtResource("1_qev3p")
+
+[node name="LevelCompleteContainer" type="Control" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LevelCompleteText" type="Label" parent="MarginContainer/LevelCompleteContainer"]
+layout_mode = 2
+offset_left = -552.0
+offset_top = -41.0
+offset_right = 552.0
+offset_bottom = 40.0
+text = "Level Complete!"
+label_settings = ExtResource("2_rjo06")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PressSpaceText" type="Label" parent="MarginContainer/LevelCompleteContainer"]
+layout_mode = 2
+offset_left = -552.0
+offset_top = 275.0
+offset_right = 552.0
+offset_bottom = 300.0
+size_flags_vertical = 8
+text = "Press Space"
+label_settings = ExtResource("3_adboh")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_lkhw8")
+volume_db = -14.0

@@ -2,7 +2,6 @@ extends Node2D
 
 
 const PLAYER_SCENE: PackedScene = preload("res://scenes/player/player.tscn")
-const MAIN_SCENE: PackedScene = preload("res://scenes/main/main.tscn")
 
 @onready var player_position_marker: Marker2D = $PlayerPosition
 
@@ -17,11 +16,6 @@ var _water_animation_position: Vector2 = Vector2.ZERO
 func _ready():
 	spawn_new_player()
 	SignalManager.on_player_destroyed.connect(on_player_destroyed)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	if Input.is_key_pressed(KEY_ESCAPE):
-		get_tree().change_scene_to_packed(MAIN_SCENE)
 
 
 func spawn_new_player() -> void:
@@ -38,7 +32,6 @@ func spawn_new_player() -> void:
 
 func on_player_destroyed() -> void:
 	spawn_new_player()
-
 
 
 func _on_water_body_entered(body: Node):
