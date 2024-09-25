@@ -41,6 +41,8 @@ func _ready():
 	
 	arrow.hide()
 	_start_player_position = position
+	
+	SignalManager.on_level_complete.connect(on_level_complete)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.S
@@ -193,3 +195,7 @@ func _on_sleeping_state_changed() -> void:
 		if colliding_bodies.size() > 0:
 			colliding_bodies[0].destroy_cup()
 		delete_player()
+
+func on_level_complete() -> void:
+	ball_sprite.hide()
+	label.hide()

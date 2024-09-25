@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://do20l47gghts7"]
+
+[ext_resource type="Texture2D" uid="uid://lh6kic7o2rwj" path="res://assets/images/props/stone_obstacle.png" id="1_b5dfv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0rpta"]
+size = Vector2(28, 220)
+
+[node name="Barrier" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -1.5708
+scale = Vector2(1, 0.4)
+texture = ExtResource("1_b5dfv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_0rpta")
